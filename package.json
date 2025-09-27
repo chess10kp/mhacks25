@@ -1,4 +1,22 @@
 {
+  "name": "solana-wallet-app",
+  "version": "1.0.0",
+  "description": "A full-stack Solana wallet application with React frontend and Node.js backend",
+  "scripts": {
+    "dev": "concurrently \"npm run backend:dev\" \"npm run frontend:dev\"",
+    "backend:dev": "cd backend && npm run dev",
+    "frontend:dev": "cd frontend && npm start",
+    "backend:build": "cd backend && npm run build",
+    "frontend:build": "cd frontend && npm run build",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "start": "cd backend && npm start"
+  },
+  "keywords": ["solana", "wallet", "react", "nodejs", "blockchain"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
   "dependencies": {
     "@solana/web3.js": "^1.98.4",
     "bs58": "^6.0.0"
