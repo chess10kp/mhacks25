@@ -6,6 +6,7 @@ import WalletManager from "./components/WalletManager";
 import { Nav } from "./header";
 import { ChatInterface } from "./components/chat-interface";
 import "./App.css";
+import "../src/index.css";
 
 function App() {
   return (
@@ -20,21 +21,16 @@ function App() {
 
           <div className="relative max-w-7xl mx-auto px-6 py-24">
             <div className="text-center">
-              <h1 className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-white via-orange-200 to-amber-200 bg-clip-text text-transparent mb-6">
+              <h1 className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-white via-orange-200 to-amber-200 bg-clip-text text-transparent mb-6 instrument-serif-regular">
                 SolMate
               </h1>
-              <p className="text-xl text-white/40 max-w-2xl mx-auto mb-12 font-light">
-                Your intelligent Solana companion for seamless wallet management
-              </p>
             </div>
           </div>
         </section>
 
-        {/* Main Content */}
         <main className="relative z-10">
           <div className="max-w-7xl mx-auto px-6 pb-24">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Left Column */}
               <div className="space-y-8">
                 <div className="relative bg-[#040404] rounded-2xl p-8 border border-[#3D3D3D] hover:border-[#BA9465] transition-all duration-600">
                   <WalletConnect />
@@ -45,7 +41,6 @@ function App() {
                 </div>
               </div>
 
-              {/* Right Column */}
               <div className="space-y-8">
                 <div className="relative bg-[#040404] rounded-2xl p-8 border border-[#3D3D3D] hover:border-[#BA9465] transition-all duration-600">
                   <WalletManager />
@@ -58,17 +53,15 @@ function App() {
             </div>
           </div>
 
-          {/* Chat Interface */}
           <div className="max-w-7xl mx-auto px-6 pb-24">
             <ChatInterface />
           </div>
         </main>
 
-        {/* Footer */}
         <footer className="border-t border-[#3D3D3D] bg-[#040404]">
           <div className="max-w-7xl mx-auto px-6 py-12">
             <div className="text-center text-white/40 font-light">
-              <p>Built with React, Node.js, and Solana Web3.js</p>
+              <p>Built with React, Node.js, and Solana Web4.js</p>
             </div>
           </div>
         </footer>
