@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
+import { useWallet } from '../context/WalletContext';
 import { api } from '../services/api';
 
 const WalletGenerator: React.FC = () => {
+  const { saveMyWallet } = useWallet();
   const [generatedWallet, setGeneratedWallet] = useState<{ publicKey: string; privateKey: string } | null>(null);
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState<string | null>(null);
+  const [walletName, setWalletName] = useState('');
+  const [saveWalletChecked, setSaveWalletChecked] = useState(false);
 
   const generateWallet = async () => {
     setLoading(true);
@@ -23,6 +27,15 @@ const WalletGenerator: React.FC = () => {
     navigator.clipboard.writeText(text);
     setCopied(type);
     setTimeout(() => setCopied(null), 2000);
+  };
+
+  const handleSaveWallet = () => {
+    if (generatedWallet && walletName.trim()) {
+      saveMyWallet(walletName.trim(), generatedWallet.publicKey, generatedWallet.privateKey);
+      setWalletName('');
+      setSaveWalletChecked(false);
+      alert('Wallet saved successfully!');
+    }
   };
 
   return (
@@ -68,6 +81,31 @@ const WalletGenerator: React.FC = () => {
                 {copied === 'private' ? 'Copied!' : 'Copy'}
               </button>
             </div>
+          </div>
+
+          <div className="save-wallet-section">
+            <label className="checkbox-label">
+              <input
+                type="checkbox"
+                checked={saveWalletChecked}
+                onChange={(e) => setSaveWalletChecked(e.target.checked)}
+              />
+              Save this wallet
+            </label>
+            {saveWalletChecked && (
+              <div className="save-wallet-form">
+                <input
+                  type="text"
+                  value={walletName}
+                  onChange={(e) => setWalletName(e.target.value)}
+                  placeholder="Wallet name (e.g., My New Wallet)"
+                  className="wallet-name-input"
+                />
+                <button onClick={handleSaveWallet} className="save-button">
+                  Save Wallet
+                </button>
+              </div>
+            )}
           </div>
 
           <div className="warning">

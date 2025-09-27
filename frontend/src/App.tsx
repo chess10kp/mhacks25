@@ -3,6 +3,7 @@ import { WalletProvider } from './context/WalletContext';
 import WalletConnect from './components/WalletConnect';
 import TransactionForm from './components/TransactionForm';
 import WalletGenerator from './components/WalletGenerator';
+import WalletManager from './components/WalletManager';
 import './App.css';
 
 function App() {
@@ -22,6 +23,10 @@ function App() {
 
             <section className="transaction-section">
               <TransactionForm />
+            </section>
+
+            <section className="manager-section">
+              <WalletManager />
             </section>
 
             <section className="generator-section">
