@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Reset and base styles */
 * {
   margin: 0;
@@ -11,70 +15,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #000000;
+  color: #ffffff;
   min-height: 100vh;
-}
-
-.App {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.App-header {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  padding: 2rem;
-  text-align: center;
-  color: white;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.App-header h1 {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
-  font-weight: 700;
-}
-
-.App-header p {
-  font-size: 1.2rem;
-  opacity: 0.9;
-}
-
-.App-main {
-  flex: 1;
-  padding: 2rem;
-}
-
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
-}
-
-/* Section styles */
-.wallet-section,
-.transaction-section,
-.manager-section,
-.generator-section {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.wallet-section h3,
-.transaction-section h3,
-.manager-section h3,
-.generator-section h3 {
-  color: #333;
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
-  font-weight: 600;
 }
 
 /* Wallet Connect Styles */
@@ -85,25 +28,25 @@ body {
 .connect-section {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .connect-button {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: linear-gradient(135deg, #BA9465 0%, #D4A574 100%);
+  color: #000000;
   border: none;
   padding: 1rem 2rem;
-  border-radius: 50px;
-  font-size: 1.1rem;
+  border-radius: 12px;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 20px rgba(186, 148, 101, 0.3);
 }
 
 .connect-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 8px 30px rgba(186, 148, 101, 0.4);
 }
 
 .my-wallets-section {
@@ -111,21 +54,21 @@ body {
 }
 
 .my-wallets-toggle {
-  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
-  border-radius: 25px;
-  font-size: 1rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 16px rgba(40, 167, 69, 0.3);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
 }
 
 .my-wallets-toggle:hover {
   transform: translateY(-1px);
-  box-shadow: 0 12px 24px rgba(40, 167, 69, 0.4);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
 }
 
 .my-wallets-dropdown {
@@ -133,9 +76,10 @@ body {
   top: 100%;
   left: 0;
   right: 0;
-  background: white;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  background: #18181b;
+  border: 1px solid #3D3D3D;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
   z-index: 1000;
   margin-top: 0.5rem;
   max-height: 200px;
@@ -146,13 +90,13 @@ body {
   display: flex;
   align-items: center;
   padding: 1rem;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #3D3D3D;
   cursor: pointer;
   transition: background 0.2s ease;
 }
 
 .my-wallet-item:hover {
-  background: #f8f9fa;
+  background: #27272a;
 }
 
 .my-wallet-item:last-child {
@@ -165,28 +109,29 @@ body {
 
 .wallet-name {
   font-weight: 600;
-  color: #333;
+  color: #ffffff;
   margin-bottom: 0.25rem;
 }
 
 .wallet-address {
-  font-size: 0.9rem;
-  color: #666;
-  font-family: monospace;
+  font-size: 0.85rem;
+  color: #a1a1aa;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
 }
 
 .wallet-details {
-  background: #f8f9fa;
+  background: #18181b;
   padding: 1.5rem;
-  border-radius: 15px;
-  margin-bottom: 1rem;
-  border-left: 4px solid #667eea;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  border: 1px solid #3D3D3D;
 }
 
 .wallet-details p {
-  margin-bottom: 0.5rem;
-  color: #555;
+  margin-bottom: 0.75rem;
+  color: #a1a1aa;
   word-break: break-all;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
 }
 
 .wallet-actions {
@@ -199,29 +144,30 @@ body {
 .disconnect-button {
   padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 25px;
+  border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-size: 0.9rem;
 }
 
 .refresh-button {
-  background: #28a745;
+  background: #10b981;
   color: white;
 }
 
 .refresh-button:hover {
-  background: #218838;
+  background: #059669;
   transform: translateY(-1px);
 }
 
 .disconnect-button {
-  background: #dc3545;
+  background: #ef4444;
   color: white;
 }
 
 .disconnect-button:hover {
-  background: #c82333;
+  background: #dc2626;
   transform: translateY(-1px);
 }
 
@@ -232,56 +178,60 @@ body {
 
 .tabs {
   display: flex;
-  margin-bottom: 1rem;
-  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: #18181b;
+  border: 1px solid #3D3D3D;
 }
 
 .tab {
   flex: 1;
   padding: 0.75rem 1rem;
   border: none;
-  background: #f8f9fa;
-  color: #666;
+  background: transparent;
+  color: #a1a1aa;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-size: 0.9rem;
 }
 
 .tab.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: linear-gradient(135deg, #BA9465 0%, #D4A574 100%);
+  color: #000000;
 }
 
 .tab:hover:not(.active) {
-  background: #e9ecef;
+  background: #27272a;
+  color: #ffffff;
 }
 
 .add-button {
-  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
-  border-radius: 25px;
+  border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-bottom: 1rem;
-  box-shadow: 0 8px 16px rgba(40, 167, 69, 0.3);
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+  font-size: 0.9rem;
 }
 
 .add-button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 12px 24px rgba(40, 167, 69, 0.4);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
 }
 
 .add-form {
-  background: #f8f9fa;
+  background: #18181b;
   padding: 1.5rem;
-  border-radius: 15px;
-  margin-bottom: 1rem;
-  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  border: 1px solid #3D3D3D;
 }
 
 .add-form .form-group {
@@ -291,27 +241,30 @@ body {
 .add-form label {
   display: block;
   font-weight: 600;
-  color: #333;
+  color: #ffffff;
   margin-bottom: 0.5rem;
+  font-size: 0.9rem;
 }
 
 .add-form input {
   width: 100%;
   padding: 0.75rem;
-  border: 2px solid #e9ecef;
+  border: 1px solid #3D3D3D;
   border-radius: 8px;
   font-size: 0.9rem;
+  background: #0a0a0a;
+  color: #ffffff;
   transition: all 0.3s ease;
 }
 
 .add-form input:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #BA9465;
+  box-shadow: 0 0 0 3px rgba(186, 148, 101, 0.1);
 }
 
 .save-button {
-  background: #28a745;
+  background: #10b981;
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -320,10 +273,11 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   width: 100%;
+  font-size: 0.9rem;
 }
 
 .save-button:hover {
-  background: #218838;
+  background: #059669;
   transform: translateY(-1px);
 }
 
@@ -337,16 +291,17 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
-  border: 1px solid #e9ecef;
-  border-radius: 10px;
-  margin-bottom: 0.5rem;
-  background: white;
+  border: 1px solid #3D3D3D;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  background: #18181b;
   transition: all 0.3s ease;
 }
 
 .wallet-item:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   transform: translateY(-1px);
+  border-color: #BA9465;
 }
 
 .wallet-item .wallet-info {
@@ -355,14 +310,14 @@ body {
 
 .wallet-item .wallet-name {
   font-weight: 600;
-  color: #333;
+  color: #ffffff;
   margin-bottom: 0.25rem;
 }
 
 .wallet-item .wallet-address {
-  font-size: 0.9rem;
-  color: #666;
-  font-family: monospace;
+  font-size: 0.85rem;
+  color: #a1a1aa;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
 }
 
 .wallet-actions {
@@ -371,42 +326,42 @@ body {
 }
 
 .connect-btn {
-  background: #007bff;
+  background: #3b82f6;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
   border-radius: 6px;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .connect-btn:hover {
-  background: #0056b3;
+  background: #2563eb;
   transform: translateY(-1px);
 }
 
 .delete-btn {
-  background: #dc3545;
+  background: #ef4444;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
   border-radius: 6px;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .delete-btn:hover {
-  background: #c82333;
+  background: #dc2626;
   transform: translateY(-1px);
 }
 
 .empty-state {
   text-align: center;
-  color: #666;
+  color: #a1a1aa;
   font-style: italic;
   padding: 2rem;
 }
@@ -425,22 +380,25 @@ body {
 
 .form-group label {
   font-weight: 600;
-  color: #333;
+  color: #ffffff;
   margin-bottom: 0.5rem;
+  font-size: 0.9rem;
 }
 
 .form-group input {
   padding: 1rem;
-  border: 2px solid #e9ecef;
-  border-radius: 10px;
-  font-size: 1rem;
+  border: 1px solid #3D3D3D;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background: #0a0a0a;
+  color: #ffffff;
   transition: all 0.3s ease;
 }
 
 .form-group input:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #BA9465;
+  box-shadow: 0 0 0 3px rgba(186, 148, 101, 0.1);
 }
 
 .address-input-group {
@@ -454,19 +412,20 @@ body {
 }
 
 .recipients-button {
-  background: #6c757d;
+  background: #71717a;
   color: white;
   border: none;
   padding: 1rem 1.5rem;
-  border-radius: 10px;
+  border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
+  font-size: 0.9rem;
 }
 
 .recipients-button:hover {
-  background: #5a6268;
+  background: #52525b;
   transform: translateY(-1px);
 }
 
@@ -475,9 +434,10 @@ body {
   top: 100%;
   left: 0;
   right: 0;
-  background: white;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  background: #18181b;
+  border: 1px solid #3D3D3D;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
   z-index: 1000;
   margin-top: 0.5rem;
   max-height: 200px;
@@ -486,13 +446,13 @@ body {
 
 .recipient-item {
   padding: 1rem;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #3D3D3D;
   cursor: pointer;
   transition: background 0.2s ease;
 }
 
 .recipient-item:hover {
-  background: #f8f9fa;
+  background: #27272a;
 }
 
 .recipient-item:last-child {
@@ -501,14 +461,14 @@ body {
 
 .recipient-name {
   font-weight: 600;
-  color: #333;
+  color: #ffffff;
   margin-bottom: 0.25rem;
 }
 
 .recipient-address {
-  font-size: 0.9rem;
-  color: #666;
-  font-family: monospace;
+  font-size: 0.85rem;
+  color: #a1a1aa;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
 }
 
 .amount-input-group {
@@ -522,20 +482,21 @@ body {
 }
 
 .max-button {
-  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
   color: white;
   border: none;
   padding: 1rem 1.5rem;
-  border-radius: 10px;
+  border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
+  font-size: 0.9rem;
 }
 
 .max-button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 16px rgba(255, 107, 107, 0.3);
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
 }
 
 .percentage-buttons {
@@ -545,38 +506,39 @@ body {
 }
 
 .percentage-btn {
-  background: #6c757d;
+  background: #71717a;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
-  border-radius: 8px;
+  border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   flex: 1;
+  font-size: 0.8rem;
 }
 
 .percentage-btn:hover {
-  background: #5a6268;
+  background: #52525b;
   transform: translateY(-1px);
 }
 
 .send-button {
-  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: white;
   border: none;
   padding: 1rem 2rem;
-  border-radius: 50px;
-  font-size: 1.1rem;
+  border-radius: 12px;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
 }
 
 .send-button:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 15px 30px rgba(40, 167, 69, 0.4);
+  box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4);
 }
 
 .send-button:disabled {
@@ -586,21 +548,22 @@ body {
 
 .message {
   padding: 1rem;
-  border-radius: 10px;
+  border-radius: 8px;
   margin-top: 1rem;
   font-weight: 600;
+  font-size: 0.9rem;
 }
 
 .message.success {
-  background: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
+  background: #064e3b;
+  color: #10b981;
+  border: 1px solid #065f46;
 }
 
 .message.error {
-  background: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
+  background: #7f1d1d;
+  color: #f87171;
+  border: 1px solid #991b1b;
 }
 
 /* Wallet Generator Styles */
@@ -609,22 +572,22 @@ body {
 }
 
 .generate-button {
-  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-  color: white;
+  background: linear-gradient(135deg, #BA9465 0%, #D4A574 100%);
+  color: #000000;
   border: none;
   padding: 1rem 2rem;
-  border-radius: 50px;
-  font-size: 1.1rem;
+  border-radius: 12px;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+  box-shadow: 0 4px 20px rgba(186, 148, 101, 0.3);
   margin-bottom: 2rem;
 }
 
 .generate-button:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 15px 30px rgba(255, 107, 107, 0.4);
+  box-shadow: 0 8px 30px rgba(186, 148, 101, 0.4);
 }
 
 .generate-button:disabled {
@@ -634,10 +597,10 @@ body {
 
 .generated-wallet {
   text-align: left;
-  background: #f8f9fa;
+  background: #18181b;
   padding: 1.5rem;
-  border-radius: 15px;
-  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  border: 1px solid #3D3D3D;
 }
 
 .wallet-field {
@@ -647,8 +610,9 @@ body {
 .wallet-field label {
   display: block;
   font-weight: 600;
-  color: #333;
+  color: #ffffff;
   margin-bottom: 0.5rem;
+  font-size: 0.9rem;
 }
 
 .field-container {
@@ -659,14 +623,16 @@ body {
 .wallet-input {
   flex: 1;
   padding: 0.75rem;
-  border: 2px solid #e9ecef;
+  border: 1px solid #3D3D3D;
   border-radius: 8px;
-  font-size: 0.9rem;
-  background: white;
+  font-size: 0.85rem;
+  background: #0a0a0a;
+  color: #ffffff;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
 }
 
 .copy-button {
-  background: #6c757d;
+  background: #71717a;
   color: white;
   border: none;
   padding: 0.75rem 1rem;
@@ -675,19 +641,20 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
+  font-size: 0.8rem;
 }
 
 .copy-button:hover {
-  background: #5a6268;
+  background: #52525b;
   transform: translateY(-1px);
 }
 
 .save-wallet-section {
   margin: 1.5rem 0;
   padding: 1rem;
-  background: white;
-  border-radius: 10px;
-  border: 1px solid #e9ecef;
+  background: #0a0a0a;
+  border-radius: 8px;
+  border: 1px solid #3D3D3D;
 }
 
 .save-wallet-form {
@@ -699,13 +666,15 @@ body {
 .save-wallet-form input {
   flex: 1;
   padding: 0.75rem;
-  border: 2px solid #e9ecef;
+  border: 1px solid #3D3D3D;
   border-radius: 8px;
   font-size: 0.9rem;
+  background: #18181b;
+  color: #ffffff;
 }
 
 .save-button {
-  background: #28a745;
+  background: #10b981;
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -714,35 +683,56 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
+  font-size: 0.9rem;
 }
 
 .save-button:hover {
-  background: #218838;
+  background: #059669;
   transform: translateY(-1px);
 }
 
 .warning {
-  background: #fff3cd;
-  color: #856404;
+  background: #451a03;
+  color: #fbbf24;
   padding: 1rem;
-  border-radius: 10px;
-  border: 1px solid #ffeaa7;
+  border-radius: 8px;
+  border: 1px solid #92400e;
   margin-top: 1rem;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
-/* Footer */
-.App-footer {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  padding: 1.5rem;
-  text-align: center;
-  color: white;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+/* Section Headers */
+.wallet-section h3,
+.transaction-section h3,
+.manager-section h3,
+.generator-section h3 {
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.App-footer p {
-  opacity: 0.8;
+.wallet-section h3::before {
+  content: "🔗";
+  font-size: 1.2rem;
+}
+
+.transaction-section h3::before {
+  content: "💸";
+  font-size: 1.2rem;
+}
+
+.manager-section h3::before {
+  content: "⚙️";
+  font-size: 1.2rem;
+}
+
+.generator-section h3::before {
+  content: "✨";
+  font-size: 1.2rem;
 }
 
 /* Responsive Design */
@@ -750,14 +740,6 @@ body {
   .container {
     grid-template-columns: 1fr;
     padding: 1rem;
-  }
-  
-  .App-header h1 {
-    font-size: 2rem;
-  }
-  
-  .App-header p {
-    font-size: 1rem;
   }
   
   .wallet-actions {
