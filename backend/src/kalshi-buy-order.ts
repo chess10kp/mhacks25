@@ -97,41 +97,47 @@ async function findOpenMarket(): Promise<KalshiMarket> {
   const data = (await response.json()) as { market: KalshiMarket };
   const market = data.market;
 
-  console.log("✅ Test Market found:");
-  console.log(`   📊 Ticker: ${market.ticker}`);
-  console.log(`   📝 Title: ${market.title}`);
-  console.log(`   💰 Last Price: ${market.last_price}%`);
-  console.log(`   📈 Yes Bid: ${market.yes_bid}% | No Bid: ${market.no_bid}%`);
-  console.log(
-    `   📊 Volume 24h: ${market.volume_24h} | Liquidity: ${market.liquidity}`
-  );
-
   return market;
 }
 
 async function placeBuyOrder(
-  market: KalshiMarket,
-  side: string
+  ticker: string,
+  // market: KalshiMarket,
+  side: string,
+  price: number
 ): Promise<KalshiOrder> {
-  console.log("\n💰 Step 2: Placing buy order...");
+  console.log("\n💰 Step 2: Placing buy order...", ticker, side, price);
 
+  const marketResponse = await fetch(
+    `https://api.elections.kalshi.com/trade-api/v2/markets/${ticker}`
+  );
+
+  const data = (await marketResponse.json()) as { market: KalshiMarket };
+  const market = data.market;
+
+  console.log("🔍 Market data:", market);
   const clientOrderId = crypto.randomBytes(16).toString("hex");
 
   // Use the actual market prices - no hardcoded defaults!
   const marketPrice = side === "yes" ? market.yes_bid : market.no_bid;
   console.log(
-    `🔍 Market data: last_price=${market.last_price}, yes_bid=${market.yes_bid}, no_bid=${market.no_bid}`
+    `🔍 Market data: yes_bid=${market.yes_bid}, no_bid=${market.no_bid}`
   );
 
   // Use market price + 1 cent to be competitive
   const orderPrice = marketPrice + 1;
+
+  if (price < orderPrice) {
+  }
+
+  let cnt = price / orderPrice;
 
   let orderData;
   orderData = {
     ticker: market.ticker,
     action: "buy",
     side: side,
-    count: 1,
+    count: cnt,
     type: "limit",
     yes_price: side === "yes" ? orderPrice : market.yes_bid,
     no_price: side === "no" ? orderPrice : market.no_bid,
@@ -236,44 +242,44 @@ export {
 // Export types for use in other modules
 export type { KalshiMarket, KalshiOrder, MarketsResponse };
 
-async function main() {
-  try {
-    console.log("🚀 Starting Kalshi Buy Order Process...\n");
+// async function main() {
+//   try {
+//     console.log("🚀 Starting Kalshi Buy Order Process...\n");
 
-    const market = await findOpenMarket();
-    const order = await placeBuyOrder(market);
+//     const market = await findOpenMarket();
+//     const order = await placeBuyOrder(market);
 
-    console.log("\n🔍 Step 3: Listing all orders to check status...");
-    const allOrders = await listAllOrders();
+//     console.log("\n🔍 Step 3: Listing all orders to check status...");
+//     const allOrders = await listAllOrders();
 
-    // Display all orders
-    console.log("\n📋 All Orders:");
-    allOrders.forEach((o, index) => {
-      console.log(`   ${index + 1}. Order ID: ${o.order_id}`);
-      console.log(`      Ticker: ${o.ticker}`);
-      console.log(`      Action: ${o.action} ${o.side}`);
-      console.log(`      Count: ${o.count}`);
-      console.log(`      Price: ${o.yes_price} cents`);
-      console.log(`      Status: ${o.status}`);
-      console.log(
-        `      Created: ${new Date(o.created_time).toLocaleString()}`
-      );
-      console.log("");
-    });
+//     // Display all orders
+//     console.log("\n📋 All Orders:");
+//     allOrders.forEach((o, index) => {
+//       console.log(`   ${index + 1}. Order ID: ${o.order_id}`);
+//       console.log(`      Ticker: ${o.ticker}`);
+//       console.log(`      Action: ${o.action} ${o.side}`);
+//       console.log(`      Count: ${o.count}`);
+//       console.log(`      Price: ${o.yes_price} cents`);
+//       console.log(`      Status: ${o.status}`);
+//       console.log(
+//         `      Created: ${new Date(o.created_time).toLocaleString()}`
+//       );
+//       console.log("");
+//     });
 
-    console.log("\n✅ Process completed!");
-    console.log("\n🎯 Next Steps Available:");
-    console.log("   📋 List all orders: GET /portfolio/orders");
-    console.log("   ✏️ Amend orders: PUT /portfolio/orders/{order_id}");
-    console.log("   ❌ Cancel orders: DELETE /portfolio/orders/{order_id}");
-    console.log("   🔌 WebSocket connections for real-time updates");
-    console.log("   🤖 Build automated trading strategies");
-    console.log(
-      "\n💡 Example: To delete an order, use: DELETE /portfolio/orders/{order_id}"
-    );
-  } catch (error) {
-    console.error("❌ Error:", error);
-  }
-}
+//     console.log("\n✅ Process completed!");
+//     console.log("\n🎯 Next Steps Available:");
+//     console.log("   📋 List all orders: GET /portfolio/orders");
+//     console.log("   ✏️ Amend orders: PUT /portfolio/orders/{order_id}");
+//     console.log("   ❌ Cancel orders: DELETE /portfolio/orders/{order_id}");
+//     console.log("   🔌 WebSocket connections for real-time updates");
+//     console.log("   🤖 Build automated trading strategies");
+//     console.log(
+//       "\n💡 Example: To delete an order, use: DELETE /portfolio/orders/{order_id}"
+//     );
+//   } catch (error) {
+//     console.error("❌ Error:", error);
+//   }
+// }
 
 // main();

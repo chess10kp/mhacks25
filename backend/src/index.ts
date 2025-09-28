@@ -5,6 +5,7 @@ import bs58 from "bs58";
 import { balance, sendSolana, makeWalletKeys } from "./solanaWallet";
 dotenv.config();
 import { prompt as geminiPrompt } from "./gemini";
+import { placeBuyOrder as buyOrder } from "./kalshi-buy-order";
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -117,6 +118,16 @@ app.post("/api/prompt", async (req, res) => {
   const output = await geminiPrompt(prompt);
   const capsulate = { response: output };
   return res.json(capsulate);
+});
+
+app.post("/api/buy", async (req, res) => {
+  const { event_ticker, decision, price } = req.body;
+  const output = await buyOrder(
+    event_ticker,
+    decision.toLowerCase(),
+    parseInt(price)
+  );
+  return res.json({ response: output });
 });
 
 app.listen(PORT, () => {

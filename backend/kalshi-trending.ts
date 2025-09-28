@@ -110,22 +110,27 @@ export async function main() {
     const fullMarkets = await fetchMarketsForEvent(e.event_ticker);
     const m = pickMostInterestingMarket(fullMarkets);
 
-    // console.log(
-    //   `${i + 1}. ${e.title} — ${e.sub_title} [${e.category}]\n` +
-    //   `   Series: ${e.series_ticker} | Event: ${e.event_ticker}\n` +
-    //   `   Score: ${e.score.toLocaleString()} | Total Markets: ${fullMarkets.length}\n` +
-    //   `   URL: ${url}\n` +
-    //   (m
-    //     ? `   Market: ${m.title} (${m.ticker})\n` +
-    //       `      Last Price: ${m.last_price}%\n` +
-    //       `      Yes Bid: ${m.yes_bid} | No Bid: ${m.no_bid}\n` +
-    //       `      Volume24h: ${m.volume_24h} | Open Interest: ${m.open_interest} | Liquidity: ${m.liquidity}\n`
-    //     : "   No markets found.\n")
-    // );
+    console.log(
+      `${i + 1}. ${e.title} — ${e.sub_title} [${e.category}]\n` +
+        `   Series: ${e.series_ticker} | Event: ${e.event_ticker}\n` +
+        `   Score: ${e.score.toLocaleString()} | Total Markets: ${
+          fullMarkets.length
+        }\n` +
+        `   URL: ${url}\n` +
+        (m
+          ? `   Market: ${m.title} (${m.ticker})\n` +
+            `      Last Price: ${m.last_price}%\n` +
+            `      Yes Bid: ${m.yes_bid} | No Bid: ${m.no_bid}\n` +
+            `      Volume24h: ${m.volume_24h} | Open Interest: ${m.open_interest} | Liquidity: ${m.liquidity}\n`
+          : "   No markets found.\n")
+    );
+
+    console.log("woeifj", m);
+    console.log("woeifj", m.ticker);
 
     output.push({
       Title: e.title,
-      Ticker: e.event_ticker,
+      Ticker: m.ticker,
       URL: url,
       YesBid: m?.yes_bid,
       NoBid: m?.no_bid,

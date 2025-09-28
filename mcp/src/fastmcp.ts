@@ -88,6 +88,7 @@ server.addTool({
   description: "Get the top 10 markets",
   execute: async () => {
     const ranking = await main();
+    console.log("Ranking:", ranking);
     return ranking;
   },
 });

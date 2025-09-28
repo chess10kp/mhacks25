@@ -70,7 +70,7 @@ export function ChatInterface() {
         body: JSON.stringify({ prompt: currentPrompt }),
       });
 
-      const data = await response.json();
+      const data = (await response.json()).response;
       console.log("data", data);
 
       const assistantMessage: Message = {
@@ -85,7 +85,17 @@ export function ChatInterface() {
       setMessages((prev) => [...prev, assistantMessage]);
 
       // check with the user if they want to buy the order
-      const buyPrompt = `Do you want to buy the order for ${data.event_ticker}?`;
+      const buyPrompt = `Do you want to buy the order for ${data.url}?`;
+
+      const c = window.confirm(buyPrompt);
+      if (!c) {
+        return;
+      }
+
+      const price = window.prompt("Enter the price to buy the order");
+      if (!price) {
+        return;
+      }
 
       const buyMessage: Message = {
         id: (Date.now() + 2).toString(),
@@ -95,6 +105,18 @@ export function ChatInterface() {
       };
 
       setMessages((prev) => [...prev, buyMessage]);
+
+      await fetch(`${API_BASE_URL}/api/buy`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          event_ticker: data.event_ticker,
+          decision: data.decision,
+          price: price,
+        }),
+      });
     } catch (error) {
       console.error("Error sending message:", error);
       const errorMessage: Message = {
