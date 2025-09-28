@@ -115,7 +115,8 @@ app.post("/api/prompt", async (req, res) => {
   const { prompt } = req.body;
   // @ts-ignore
   const output = await geminiPrompt(prompt);
-  return output;
+  const capsulate = { response: output };
+  return res.json(capsulate);
 });
 
 app.listen(PORT, () => {

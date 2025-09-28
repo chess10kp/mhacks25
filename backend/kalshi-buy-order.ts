@@ -87,7 +87,7 @@ async function findOpenMarket(): Promise<KalshiMarket> {
 
   // Use the correct endpoint format with ticker as path parameter
   const response = await fetch(
-    "https://api.elections.kalshi.com/trade-api/v2/markets/KXNCAAF-26-TTU"
+    `https://api.elections.kalshi.com/trade-api/v2/markets/KXNCAAF-26-TTU`
   );
 
   if (!response.ok) {
@@ -109,27 +109,33 @@ async function findOpenMarket(): Promise<KalshiMarket> {
   return market;
 }
 
-async function placeBuyOrder(market: KalshiMarket): Promise<KalshiOrder> {
+async function placeBuyOrder(
+  market: KalshiMarket,
+  side: string
+): Promise<KalshiOrder> {
   console.log("\n💰 Step 2: Placing buy order...");
 
   const clientOrderId = crypto.randomBytes(16).toString("hex");
 
   // Use the actual market prices - no hardcoded defaults!
-  const marketPrice = market.last_price || market.yes_bid;
+  const marketPrice =
+    market.last_price || (side === "yes" ? market.yes_bid : market.no_bid);
   console.log(
-    `🔍 Market data: last_price=${market.last_price}, yes_bid=${market.yes_bid}`
+    `🔍 Market data: last_price=${market.last_price}, yes_bid=${market.yes_bid}, no_bid=${market.no_bid}`
   );
 
   // Use market price + 1 cent to be competitive
   const orderPrice = marketPrice + 1;
 
-  const orderData = {
+  let orderData;
+  orderData = {
     ticker: market.ticker,
     action: "buy",
-    side: "yes",
+    side: side,
     count: 1,
     type: "limit",
-    yes_price: orderPrice,
+    yes_price: side === "yes" ? orderPrice : market.yes_bid,
+    no_price: side === "no" ? orderPrice : market.no_bid,
     client_order_id: clientOrderId,
   };
 

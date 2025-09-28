@@ -70,20 +70,31 @@ export function ChatInterface() {
         body: JSON.stringify({ prompt: currentPrompt }),
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
       const data = await response.json();
+      console.log("data", data);
 
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: data.response || "I'm sorry, I couldn't generate a response.",
+        content:
+          ` ${data.decision}. ${data.reason}` ||
+          "I'm sorry, I couldn't generate a response.",
         role: "assistant",
         timestamp: new Date(),
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
+
+      // check with the user if they want to buy the order
+      const buyPrompt = `Do you want to buy the order for ${data.event_ticker}?`;
+
+      const buyMessage: Message = {
+        id: (Date.now() + 2).toString(),
+        content: `Buying ${data.decision} for ${data.event_ticker}`,
+        role: "assistant",
+        timestamp: new Date(),
+      };
+
+      setMessages((prev) => [...prev, buyMessage]);
     } catch (error) {
       console.error("Error sending message:", error);
       const errorMessage: Message = {
@@ -236,7 +247,9 @@ export function ChatInterface() {
               <div className="flex items-center justify-between px-4 py-2 border-b border-[#2a2a2a] bg-[#111111] flex-shrink-0">
                 <div className="flex items-center space-x-3">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span className="text-white/80 text-sm font-medium">SolMate</span>
+                  <span className="text-white/80 text-sm font-medium">
+                    SolMate
+                  </span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <div className="w-1.5 h-1.5 bg-orange-500 rounded-full"></div>
@@ -258,7 +271,9 @@ export function ChatInterface() {
                       exit={{ opacity: 0, y: -20 }}
                       transition={{ duration: 0.3 }}
                       className={`flex ${
-                        message.role === "user" ? "justify-end" : "justify-start"
+                        message.role === "user"
+                          ? "justify-end"
+                          : "justify-start"
                       }`}
                     >
                       <div
