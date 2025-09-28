@@ -5,10 +5,8 @@ import bs58 from "bs58";
 import { balance, sendSolana, makeWalletKeys } from "./solanaWallet";
 dotenv.config();
 import { prompt as geminiPrompt } from "./gemini";
-import { OAuthClientRegistrationErrorSchema } from "@modelcontextprotocol/sdk/shared/auth";
 const app = express();
 const PORT = process.env.PORT || 3001;
-
 
 // Middleware
 // app.use(function (req, res, next) {
@@ -117,7 +115,7 @@ app.post("/api/prompt", async (req, res) => {
   const { prompt } = req.body;
   // @ts-ignore
   const output = await geminiPrompt(prompt);
-  console.log(output);
+  return output;
 });
 
 app.listen(PORT, () => {

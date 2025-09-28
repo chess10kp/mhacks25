@@ -2,6 +2,8 @@
 // Run with: npx ts-node kalshi-trending.ts
 // Uses Node 18+ built-in fetch (no node-fetch import needed)
 
+import { VoteAuthorizationLayout } from "@solana/web3.js";
+
 interface KalshiMarket {
   ticker: string;
   title: string;
@@ -123,6 +125,11 @@ export async function main() {
 
     output.push({
       Title: e.title,
+      Ticker: e.event_ticker,
+      URL: url,
+      YesBid: m?.yes_bid,
+      NoBid: m?.no_bid,
+      LastPrice: m?.last_price,
     });
   }
   return JSON.stringify(output);

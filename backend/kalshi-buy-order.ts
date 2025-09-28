@@ -217,6 +217,20 @@ async function amendOrder(
   return order.order;
 }
 
+// Export the necessary functions for use in other modules
+export {
+  findOpenMarket,
+  placeBuyOrder,
+  listAllOrders,
+  cancelOrder,
+  amendOrder,
+  makeAuthenticatedRequest,
+  signPssText,
+};
+
+// Export types for use in other modules
+export type { KalshiMarket, KalshiOrder, MarketsResponse };
+
 async function main() {
   try {
     console.log("🚀 Starting Kalshi Buy Order Process...\n");
