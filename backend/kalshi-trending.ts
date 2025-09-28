@@ -1,7 +1,6 @@
 // kalshi-trending.ts
 // Run with: npx ts-node kalshi-trending.ts
-
-import fetch from "node-fetch";
+// Uses Node 18+ built-in fetch (no node-fetch import needed)
 
 interface KalshiMarket {
   ticker: string;
@@ -45,7 +44,7 @@ async function fetchAllOpenEvents(limit = 200): Promise<KalshiEvent[]> {
     const res = await fetch(url.toString());
     if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
 
-    const json = (await res.json()) as EventsResponse; // <-- assert type
+    const json = (await res.json()) as EventsResponse;
     allEvents.push(...json.events);
     cursor = json.cursor;
   } while (cursor);
@@ -58,7 +57,7 @@ async function fetchMarketsForEvent(eventTicker: string): Promise<KalshiMarket[]
   const res = await fetch(url);
   if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
 
-  const json = (await res.json()) as { markets: KalshiMarket[] }; // <-- assert type
+  const json = (await res.json()) as { markets: KalshiMarket[] };
   return json.markets;
 }
 
@@ -98,7 +97,6 @@ async function main() {
   for (const [i, e] of ranked.entries()) {
     const url = `https://kalshi.com/markets/${e.series_ticker.toLowerCase()}/${e.event_ticker.toLowerCase()}`;
 
-    // Fetch full markets for this event (to get proper titles)
     const fullMarkets = await fetchMarketsForEvent(e.event_ticker);
     const m = pickMostInterestingMarket(fullMarkets);
 
