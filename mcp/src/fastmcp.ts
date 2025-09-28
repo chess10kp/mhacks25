@@ -1,23 +1,15 @@
 import { FastMCP } from "fastmcp";
 import { z } from "zod";
-import { balance, sendSolana } from "../../backend/src/solanaWallet";
-import { api } from "../../frontend/src/services/api";
+import { balance, sendSolana } from "../../backend/src/solanaWallet.ts";
+import { api } from "../../frontend/src/services/api.ts";
+import { main } from "../../backend/kalshi-trending.ts";
+import { getKalshiBalance } from "../../backend/kalshi-test.ts";
+import { main as geminiMain } from "../gemini.ts";
 
 const server = new FastMCP({
-  name: "SolMSolMate MCPate MCP",
+  name: "SolMate MCP",
   version: "1.0.0",
-});
-
-server.addTool({
-  name: "add",
-  description: "Add two numbers",
-  parameters: z.object({
-    a: z.number(),
-    b: z.number(),
-  }),
-  execute: async ({ a, b }) => {
-    return (a + b).toString();
-  },
+  instructions: "<TODO:>",
 });
 
 server.addTool({
@@ -38,10 +30,20 @@ server.addTool({
   name: "kalshiBalance",
   description: "Get the balance of a Kalshi account",
   execute: async () => {
-    const balance = await api.getBalance(
-      "JBRY8xCWQoN73uebF4FczDoZdBN7QQbdVKMv5jbdMTPJ"
-    );
-    return balance.toString();
+    const apiKeys = await (
+      await fetch("http://localhost:3001/api/kalshi-api-key")
+    ).json();
+    const balance = await getKalshiBalance(apiKeys.privateKey, apiKeys.apiKey);
+    return balance["balance"].toString();
+  },
+});
+
+server.addTool({
+  name: "getMarkets",
+  description: "Get the top 10 markets",
+  execute: async () => {
+    const ranking = await main();
+    return ranking;
   },
 });
 
@@ -52,12 +54,8 @@ server.addTool({
     const balance = await api.getBalance(
       "JBRY8xCWQoN73uebF4FczDoZdBN7QQbdVKMv5jbdMTPJ"
     );
-    return balance.toString();
+    return balance["balance"].toString();
   },
-});
-
-server.addTool({
-  name: "getMarket",
 });
 
 server.start({
