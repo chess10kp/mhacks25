@@ -16,10 +16,10 @@
   font-style: italic;
 }
 
-.geist-regular {
+.geist-<uniquifier> {
   font-family: "Geist", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 400;
+  font-weight: <weight>;
   font-style: normal;
 }
 
@@ -90,10 +90,9 @@
   font-style: normal;
 }
 
-button {
-  font-family: "Geist", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
+strong {
+  font-family: "Instrument Serif", serif;
+  font-weight: 600;
   font-style: normal;
 }
 

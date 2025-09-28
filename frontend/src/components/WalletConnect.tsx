@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useWallet } from "../context/WalletContext";
+import { RefreshCcw } from "lucide-react";
 
 const WalletConnect: React.FC = () => {
   const {
@@ -84,15 +85,17 @@ const WalletConnect: React.FC = () => {
                 : "Unable to fetch balance"}
             </p>
           </div>
-          <div className="wallet-actions">
+          <div className="wallet-actions flex items-center gap-2">
+            <div className="flex bg-green-500 p-2 rounded-md text-black items-center gap-2 p-2">
+              <button className="" onClick={refreshBalance} disabled={loading}>
+                {loading ? "Refreshing..." : "Refresh Balance"}
+              </button>
+              <RefreshCcw className="w-4 h-4" />
+            </div>
             <button
-              onClick={refreshBalance}
-              className="refresh-button"
-              disabled={loading}
+              onClick={disconnect}
+              className="p-2 text-black bg-red-500  rounded-md"
             >
-              {loading ? "Refreshing..." : "Refresh Balance"}
-            </button>
-            <button onClick={disconnect} className="disconnect-button">
               Disconnect
             </button>
           </div>

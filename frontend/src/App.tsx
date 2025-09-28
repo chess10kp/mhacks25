@@ -13,8 +13,6 @@ function App() {
     <WalletProvider>
       <div className="min-h-screen bg-black text-white">
         <Nav />
-
-        {/* Hero Section with LiquidMetal effect */}
         <section className="relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-orange-900/10 via-amber-900/5 to-black"></div>
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-orange-600/5 via-transparent to-transparent"></div>
