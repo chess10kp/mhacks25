@@ -1,5 +1,5 @@
 // fetch-ai-test.ts
-// Run with: npx ts-node fetch-ai-test.ts
+// Run with: npx ts-node fetch-ai-test.ts or npm run ai-test
 
 import dotenv from "dotenv";
 
