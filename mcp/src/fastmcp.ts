@@ -112,10 +112,11 @@ server.addTool({
   name: "solanaBalance",
   description: "Get the balance of a Solana address",
   execute: async () => {
+    const solPrice = await getSolanaPrice();
     const balance = await api.getBalance(
       "JBRY8xCWQoN73uebF4FczDoZdBN7QQbdVKMv5jbdMTPJ",
     );
-    return balance["balance"].toString();
+    return `${balance["balance"]} SOL (${Math.round(balance["balance"] * solPrice * 100) / 100} USD)`;
   },
 });
 

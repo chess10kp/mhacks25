@@ -132,19 +132,19 @@ export async function sendSolana(fromPriv: string, toPub: string, amt: number) {
     throw error;
   }
 }
-
-// Jupiter API for Solana price
 export async function getSolanaPrice(): Promise<number> {
   try {
-    const response = await fetch("https://price.jup.ag/v4/price?ids=SOL");
+    const response = await fetch(
+      "https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd",
+    );
     const data: any = await response.json();
 
-    if (data.data && data.data.SOL) {
-      return data.data.SOL.price;
+    if (data.solana && data.solana.usd) {
+      return data.solana.usd;
     }
     throw new Error("Price data not available");
   } catch (error) {
-    console.error("Error fetching SOL price from Jupiter:", error);
+    console.error("Error fetching SOL price from CoinGecko:", error);
     throw error;
   }
 }
