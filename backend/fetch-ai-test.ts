@@ -14,36 +14,37 @@ interface AIResponse {
   }>;
 }
 
-async function testASI() {
+export async function testASI(prompt: string) {
   try {
-    console.log("Testing ASI AI API...");
-    
     const res = await fetch("https://api.asi1.ai/v1/chat/completions", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${process.env.ASI_ONE_API_KEY}`,
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${process.env.ASI_ONE_API_KEY}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "asi1-mini",
-        messages: [{ 
-          role: "user", 
-          content: "find information about the 2028 presidential election and who is running and who will maybe win do an analysis" 
-        }]
-      })
+        model: "asi1-extended",
+        messages: [
+          {
+            role: "user",
+            content: prompt,
+          },
+        ],
+      }),
     });
 
     if (!res.ok) {
       throw new Error(`HTTP ${res.status}: ${await res.text()}`);
     }
 
-    const response = await res.json() as AIResponse;
+    const response = (await res.json()) as AIResponse;
     console.log("AI Response:");
     console.log(response.choices[0].message.content);
-    
   } catch (error) {
     console.error("Error:", error);
   }
 }
 
-testASI();
+testASI(
+  "Find information about the current situation of the US economy and present a report on why the Fed might cut rates thrice this year, and why they might not. Present the report in a formal tone. Also, give me a summary of the report."
+);

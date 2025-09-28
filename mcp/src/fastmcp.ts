@@ -4,7 +4,7 @@ import { balance, sendSolana } from "../../backend/src/solanaWallet.ts";
 import { api } from "../../frontend/src/services/api.ts";
 import { main } from "../../backend/kalshi-trending.ts";
 import { getKalshiBalance } from "../../backend/kalshi-test.ts";
-import { main as geminiMain } from "../gemini.ts";
+import { testASI } from "../../backend/fetch-ai-test.ts";
 
 const server = new FastMCP({
   name: "SolMate MCP",
@@ -44,6 +44,18 @@ server.addTool({
   execute: async () => {
     const ranking = await main();
     return ranking;
+  },
+});
+
+server.addTool({
+  name: "deepResearch",
+  description: "Deep Research with the Web",
+  parameters: z.object({
+    prompt: z.string().describe("The prompt to research"),
+  }),
+  execute: async ({ prompt }: { prompt: string }) => {
+    const result = await testASI(prompt);
+    return result;
   },
 });
 

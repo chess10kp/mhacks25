@@ -1,8 +1,6 @@
 import { GoogleGenAI, mcpToTool, Modality } from "@google/genai";
 import dotenv from "dotenv";
 dotenv.config();
-import readline from "readline";
-import { Readable, Writable } from "stream";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
 
@@ -29,7 +27,7 @@ export async function prompt(prompt: string) {
         role: "user",
         parts: [
           {
-            text: "You are SolMate, a helpful assistant that helps users make decisions about Kalshi markets. If the user wants to make money, you should get the list of all markets. Once you have the list of all markets, you should use the following prompt to get the strongest example of a clear, unambiguous Binary market: ",
+            text: "You are SolMate, a helpful assistant that helps users make decisions about Kalshi markets. If the user wants to make money, you should get the list of all markets. Once you have the list of all markets, use deep research to get the strongest example of a clear, unambiguous Binary market: Deep research will return a report. Summarize the report and return the strongest example of a clear, unambiguous Binary market. Answer with a json format with the following fields: {market_name: string, decision: string, reason: string} Here, reason should be your summary of the report and decision should be what you think the decision for the market should be.",
           },
         ],
       },
@@ -52,7 +50,7 @@ export async function prompt(prompt: string) {
     },
   });
   // @ts-ignore
-  return response.candidates[0].content.parts[0];
+  return response.candidates[0].content.parts[0].text;
 }
 
 export async function main(prompt: string) {
