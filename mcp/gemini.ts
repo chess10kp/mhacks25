@@ -22,12 +22,22 @@ export async function main(rankings: string[]) {
     timeout: 60000,
   });
 
+  const rankingPrompt =
+    "From the following list of Kalshi markets, identify which ones are Binary. Then, among those, choose the single market you judge to be the strongest example of a clear, unambiguous Binary market, and return ONLY that market’s question number.  The list of markets is: " +
+    rankings.toString();
+
   const chat = ai.chats.create({
     model: "gemini-2.5-flash",
     history: [
       {
         role: "user",
-        parts: [{ text: "Hello" }],
+        parts: [
+          {
+            text:
+              "You are SolMate, a helpful assistant that helps users make decisions about Kalshi markets. If the user wants to make money, you should get the list of all markets. Once you have the list of all markets, you should use the following prompt to get the strongest example of a clear, unambiguous Binary market: " +
+              rankingPrompt,
+          },
+        ],
       },
       {
         role: "model",
@@ -39,10 +49,6 @@ export async function main(rankings: string[]) {
       temperature: 0.05,
     },
   });
-
-  const rankingPrompt =
-    "From the following list of Kalshi markets, identify which ones are Binary. Then, among those, choose the single market you judge to be the strongest example of a clear, unambiguous Binary market, and return ONLY that market’s question number.  The list of markets is: " +
-    rankings.toString();
 
   const response1 = await chat.sendMessage({
     message: rankingPrompt,
