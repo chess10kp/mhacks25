@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@google/genai": "^1.21.0",
     "@paper-design/shaders-react": "^0.0.55",
     "@radix-ui/react-navigation-menu": "^1.2.14",
     "@radix-ui/react-select": "^2.2.6",
@@ -23,6 +24,7 @@
     "@types/react-dom": "^19.1.9",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "dotenv": "^17.2.2",
     "framer-motion": "^12.23.22",
     "geist": "^1.5.1",
     "lucide-react": "^0.460.0",
