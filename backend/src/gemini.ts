@@ -29,7 +29,7 @@ export async function prompt(prompt: string) {
         role: "user",
         parts: [
           {
-            text: "what tools can you use",
+            text: "You are SolMate, a helpful assistant that helps users make decisions about Kalshi markets. If the user wants to make money, you should get the list of all markets. Once you have the list of all markets, you should use the following prompt to get the strongest example of a clear, unambiguous Binary market: ",
           },
         ],
       },
@@ -51,6 +51,8 @@ export async function prompt(prompt: string) {
       temperature: 0.05,
     },
   });
+  // @ts-ignore
+  return response.candidates[0].content.parts[0];
 }
 
 export async function main(prompt: string) {
