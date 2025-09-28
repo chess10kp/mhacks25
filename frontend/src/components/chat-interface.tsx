@@ -19,8 +19,18 @@ interface Message {
   timestamp: Date;
 }
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
+
 export function ChatInterface() {
   const [isFocused, setIsFocused] = useState(false);
+  const [prompt, setPrompt] = useState("");
+
+  const onSubmit = () => {
+    fetch(`${API_BASE_URL}/api/get-single-market`, {
+      method: "POST",
+      body: JSON.stringify({ prompt }),
+    });
+  };
 
   return (
     <div className="flex flex-col items-center justify-center px-4">
@@ -164,6 +174,13 @@ export function ChatInterface() {
               <Textarea
                 placeholder=""
                 className="min-h-[80px] resize-none bg-transparent border-none text-white text-base placeholder:text-zinc-500 [&:focus]:ring-0 [&:focus]:outline-none [&:focus-visible]:ring-0 [&:focus-visible]:outline-none"
+                onChange={(e) => setPrompt(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    onSubmit();
+                  }
+                }}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
               />
