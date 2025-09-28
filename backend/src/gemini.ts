@@ -1,4 +1,4 @@
-import { GoogleGenAI, mcpToTool } from "@google/genai";
+import { GoogleGenAI, mcpToTool, Modality } from "@google/genai";
 import dotenv from "dotenv";
 dotenv.config();
 import readline from "readline";
@@ -22,14 +22,14 @@ export async function prompt(prompt: string) {
     timeout: 60000,
   });
 
-  const response = await ai.chats.create({
+  const chat = await ai.chats.create({
     model: "gemini-2.5-flash",
     history: [
       {
         role: "user",
         parts: [
           {
-            text: "You are SolMate, a helpful assistant that helps users make decisions about Kalshi markets. If the user wants to make money, you should get the list of all markets. Once you have the list of all markets, you should use the following prompt to get the strongest example of a clear, unambiguous Binary market: ",
+            text: "what tools can you use",
           },
         ],
       },
@@ -37,21 +37,20 @@ export async function prompt(prompt: string) {
         role: "model",
         parts: [{ text: "Great to meet you. What would you like to know?" }],
       },
-      {
-        role: "user",
-        parts: [
-          {
-            text: prompt,
-          },
-        ],
-      },
     ],
     config: {
       tools: [mcpToTool(mcp_client)],
       temperature: 0.05,
     },
   });
-  console.log(response);
+
+  const response = await chat.sendMessage({
+    message: prompt,
+    config: {
+      tools: [mcpToTool(mcp_client)],
+      temperature: 0.05,
+    },
+  });
 }
 
 export async function main(prompt: string) {
@@ -105,7 +104,8 @@ export async function main(prompt: string) {
   // @ts-ignore
   const data = response1.candidates[0].content.parts[0].text;
 
-  console.log("Chat response 1:", data);
+  console.log(mcpToTool(mcp_client));
+  console.log("Chat response 2:", data);
   try {
     return data;
   } catch (error) {
