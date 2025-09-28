@@ -46,7 +46,6 @@ class BalanceTool extends MCPTool<BalanceInput> {
     } catch (error) {
       return `Error getting balance for ${input.address}: ${error instanceof Error ? error.message : "Unknown error"}`;
     }
-    n;
   }
 }
 
