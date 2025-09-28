@@ -45,7 +45,7 @@ async function fetchAllOpenEvents(limit = 200): Promise<KalshiEvent[]> {
     const res = await fetch(url.toString());
     if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
 
-    const json = (await res.json()) as EventsResponse;
+    const json = (await res.json()) as EventsResponse; // <-- assert type
     allEvents.push(...json.events);
     cursor = json.cursor;
   } while (cursor);
@@ -53,10 +53,34 @@ async function fetchAllOpenEvents(limit = 200): Promise<KalshiEvent[]> {
   return allEvents;
 }
 
+async function fetchMarketsForEvent(eventTicker: string): Promise<KalshiMarket[]> {
+  const url = `https://api.elections.kalshi.com/trade-api/v2/markets?event_ticker=${eventTicker}&status=open`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
+
+  const json = (await res.json()) as { markets: KalshiMarket[] }; // <-- assert type
+  return json.markets;
+}
+
+function pickMostInterestingMarket(markets: KalshiMarket[]): KalshiMarket | null {
+  if (!markets || markets.length === 0) return null;
+
+  const viable = markets.filter(
+    m => m.liquidity > 0 && (m.volume_24h > 0 || m.open_interest > 0)
+  );
+  if (viable.length === 0) return markets[0]; // fallback
+
+  return viable.reduce((best, m) => {
+    const bestDiff = Math.abs(50 - (best.last_price || 0));
+    const curDiff = Math.abs(50 - (m.last_price || 0));
+    return curDiff < bestDiff ? m : best;
+  }, viable[0]);
+}
+
 async function main() {
   const events = await fetchAllOpenEvents();
 
-  // Calculate a “trending score” = sum of volume_24h + open_interest of all markets
+  // Score = sum of volume_24h + open_interest across all nested markets
   const ranked = events
     .map(e => {
       const score = e.markets.reduce(
@@ -69,16 +93,28 @@ async function main() {
     .sort((a, b) => b.score - a.score)
     .slice(0, 10);
 
-  console.log("Top 10 Trending Kalshi Events:\n");
-  ranked.forEach((e, i) => {
+  console.log("Top 10 Trending Kalshi Events (most interesting market per event):\n");
+
+  for (const [i, e] of ranked.entries()) {
     const url = `https://kalshi.com/markets/${e.series_ticker.toLowerCase()}/${e.event_ticker.toLowerCase()}`;
+
+    // Fetch full markets for this event (to get proper titles)
+    const fullMarkets = await fetchMarketsForEvent(e.event_ticker);
+    const m = pickMostInterestingMarket(fullMarkets);
+
     console.log(
       `${i + 1}. ${e.title} — ${e.sub_title} [${e.category}]\n` +
       `   Series: ${e.series_ticker} | Event: ${e.event_ticker}\n` +
-      `   Score: ${e.score.toLocaleString()} | Markets: ${e.markets.length}\n` +
-      `   URL: ${url}\n`
+      `   Score: ${e.score.toLocaleString()} | Total Markets: ${fullMarkets.length}\n` +
+      `   URL: ${url}\n` +
+      (m
+        ? `   Market: ${m.title} (${m.ticker})\n` +
+          `      Last Price: ${m.last_price}%\n` +
+          `      Yes Bid: ${m.yes_bid} | No Bid: ${m.no_bid}\n` +
+          `      Volume24h: ${m.volume_24h} | Open Interest: ${m.open_interest} | Liquidity: ${m.liquidity}\n`
+        : "   No markets found.\n")
     );
-  });
+  }
 }
 
 main().catch(err => console.error("Error:", err));
