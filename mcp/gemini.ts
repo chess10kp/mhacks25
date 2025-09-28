@@ -6,7 +6,55 @@ import { Readable, Writable } from "stream";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
 
-export async function main(rankings: string[]) {
+export async function prompt(prompt: string) {
+  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+
+  const mcp_client = new Client({
+    name: "solmate-mcp-client",
+    version: "0.0.1",
+  });
+
+  const serverParams = new StreamableHTTPClientTransport(
+    new URL("http://localhost:8080/mcp")
+  );
+
+  await mcp_client.connect(serverParams, {
+    timeout: 60000,
+  });
+
+  const response = await ai.chats.create({
+    model: "gemini-2.5-flash",
+    history: [
+      {
+        role: "user",
+        parts: [
+          {
+            text: "You are SolMate, a helpful assistant that helps users make decisions about Kalshi markets. If the user wants to make money, you should get the list of all markets. Once you have the list of all markets, you should use the following prompt to get the strongest example of a clear, unambiguous Binary market: ",
+          },
+        ],
+      },
+      {
+        role: "model",
+        parts: [{ text: "Great to meet you. What would you like to know?" }],
+      },
+      {
+        role: "user",
+        parts: [
+          {
+            text: prompt,
+          },
+        ],
+      },
+    ],
+    config: {
+      tools: [mcpToTool(mcp_client)],
+      temperature: 0.05,
+    },
+  });
+  console.log(response);
+}
+
+export async function main(prompt: string) {
   const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
   const mcp_client = new Client({

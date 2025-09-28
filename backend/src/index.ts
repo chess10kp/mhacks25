@@ -3,14 +3,19 @@ import cors from "cors";
 import dotenv from "dotenv";
 import bs58 from "bs58";
 import { balance, sendSolana, makeWalletKeys } from "./solanaWallet";
-
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["*"],
+  })
+);
 app.use(express.json());
 
 app.get("/api/kalshi-api-key", (req, res) => {
@@ -85,6 +90,13 @@ app.get("/api/generate-wallet", (req, res) => {
     console.error("Error generating wallet:", error);
     res.status(500).json({ error: "Failed to generate wallet" });
   }
+});
+
+app.get("/api/prompt", async (req, res) => {
+  const { prompt } = req.body;
+  const { main } = await import("../../mcp/gemini");
+  const output = await main(prompt);
+  console.log(output);
 });
 
 app.listen(PORT, () => {
