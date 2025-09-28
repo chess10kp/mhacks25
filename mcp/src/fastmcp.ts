@@ -1,6 +1,12 @@
 import { FastMCP } from "fastmcp";
 import { z } from "zod";
-import { balance, sendSolana } from "../../backend/src/solanaWallet.ts";
+import {
+  balance,
+  sendSolana,
+  makeWalletKeys,
+  getSolanaPrice,
+  secretKeyToBase58,
+} from "../../backend/src/solanaWallet.ts";
 import { api } from "../../frontend/src/services/api.ts";
 import { main } from "../../backend/kalshi-trending.ts";
 import { getKalshiBalance } from "../../backend/kalshi-test.ts";
@@ -22,7 +28,7 @@ const magicLoops = async (prompt: string) => {
       body: JSON.stringify({
         query: prompt,
       }),
-    }
+    },
   );
   const data = await response.json();
   console.log(data);
@@ -41,14 +47,30 @@ server.addTool({
   parameters: z.object({
     fromPrivateKey: z.string().describe("The private key of the sender"),
     toPublicKey: z.string().describe("The public key of the recipient"),
-    amount: z.number().describe("The amount of SOL to send"),
+    amount: z.number().describe("The amount of SOL to send in USD"),
   }),
   execute: async ({ fromPrivateKey, toPublicKey, amount }) => {
-    const result = await sendSolana(fromPrivateKey, toPublicKey, amount);
+    const solPrice = await getSolanaPrice();
+    const result = await sendSolana(
+      fromPrivateKey,
+      toPublicKey,
+      amount / solPrice,
+    );
     return result ? "Transaction sent successfully" : "Transaction failed";
   },
 });
 
+server.addTool({
+  name: "makeWallet",
+  description: "Create a new solana wallet",
+  execute: async () => {
+    const keyPair = makeWalletKeys();
+    return `${keyPair.publicKey} ${secretKeyToBase58(keyPair.secretKey)}`;
+  },
+});
+function centsToDollarsRounded(cents: number): number {
+  return Math.round(cents) / 100;
+}
 server.addTool({
   name: "kalshiBalance",
   description: "Get the balance of a Kalshi account",
@@ -57,7 +79,7 @@ server.addTool({
       await fetch("http://localhost:3001/api/kalshi-api-key")
     ).json();
     const balance = await getKalshiBalance(apiKeys.privateKey, apiKeys.apiKey);
-    return balance["balance"].toString();
+    return centsToDollarsRounded(balance["balance"]).toString();
   },
 });
 
@@ -77,7 +99,7 @@ server.addTool({
     prompt: z
       .string()
       .describe(
-        "The prompt to research: make it as specific as possible so that the report gatheres all the information needed to make a decision"
+        "The prompt to research: make it as specific as possible so that the report gatheres all the information needed to make a decision",
       ),
   }),
   execute: async ({ prompt }: { prompt: string }) => {
@@ -91,7 +113,7 @@ server.addTool({
   description: "Get the balance of a Solana address",
   execute: async () => {
     const balance = await api.getBalance(
-      "JBRY8xCWQoN73uebF4FczDoZdBN7QQbdVKMv5jbdMTPJ"
+      "JBRY8xCWQoN73uebF4FczDoZdBN7QQbdVKMv5jbdMTPJ",
     );
     return balance["balance"].toString();
   },
@@ -108,7 +130,7 @@ server.addTool({
       .number()
       .optional()
       .describe(
-        "The price in cents (optional, will use market price + 1 if not provided)"
+        "The price in cents (optional, will use market price + 1 if not provided)",
       ),
   }),
   execute: async ({ ticker, side, count, price }) => {
@@ -136,13 +158,13 @@ server.addTool({
     const response = await makeAuthenticatedRequest(
       "POST",
       "/trade-api/v2/portfolio/orders",
-      orderData
+      orderData,
     );
 
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
-        `Failed to place order: ${response.status} - ${errorText}`
+        `Failed to place order: ${response.status} - ${errorText}`,
       );
     }
 

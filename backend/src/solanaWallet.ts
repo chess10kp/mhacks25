@@ -148,3 +148,7 @@ export async function getSolanaPrice(): Promise<number> {
     throw error;
   }
 }
+
+export function secretKeyToBase58(secretKey: Uint8Array): string {
+  return bs58.encode(secretKey);
+}
