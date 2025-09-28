@@ -51,13 +51,13 @@ function App() {
             </div>
           </div>
 
-          <div className="max-w-7xl mx-auto px-6 pb-24">
+          <div className="max-w-7xl mx-auto px-6 pb-0">
             <ChatInterface />
           </div>
         </main>
 
         <footer className="border-t border-[#3D3D3D] bg-[#040404]">
-          <div className="max-w-7xl mx-auto px-6 py-12">
+          <div className="max-w-7xl mx-auto px-6 py-6">
             <div className="text-center text-white/40 font-light">
               <p>Built with React, Node.js, and Solana Web4.js</p>
             </div>
