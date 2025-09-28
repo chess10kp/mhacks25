@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import bs58 from "bs58";
 import { balance, sendSolana, makeWalletKeys } from "./solanaWallet";
 dotenv.config();
-
+import { main } from "./gemini";
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -21,6 +21,7 @@ const PORT = process.env.PORT || 3001;
 const allowedOrigins = ["http://localhost:3000", "http://127.0.0.1:3000"];
 
 const corsOptions = {
+  methods: ["GET", "POST"],
   // @ts-ignore
   origin: function (origin, callback) {
     // Check if the incoming origin is in our list of allowed origins
@@ -110,9 +111,9 @@ app.get("/api/generate-wallet", (req, res) => {
   }
 });
 
-app.get("/api/prompt", async (req, res) => {
+app.post("/api/prompt", async (req, res) => {
   const { prompt } = req.body;
-  const { main } = await import("../../mcp/gemini");
+  // @ts-ignore
   const output = await main(prompt);
   console.log(output);
 });
