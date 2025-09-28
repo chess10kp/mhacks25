@@ -9,13 +9,31 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(
-  cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["*"],
-  })
-);
+// app.use(function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept"
+//   );
+//   next();
+// });
+const allowedOrigins = ["http://localhost:3000", "http://127.0.0.1:3000"];
+
+const corsOptions = {
+  // @ts-ignore
+  origin: function (origin, callback) {
+    // Check if the incoming origin is in our list of allowed origins
+    // The '!origin' part allows for REST tools like Postman (which don't have an origin)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.get("/api/kalshi-api-key", (req, res) => {

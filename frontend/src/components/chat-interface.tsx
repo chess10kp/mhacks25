@@ -26,7 +26,7 @@ export function ChatInterface() {
   const [prompt, setPrompt] = useState("");
 
   const onSubmit = () => {
-    fetch(`${API_BASE_URL}/api/prompt`, {
+    fetch(`${API_BASE_URL}/api/balance`, {
       method: "POST",
       body: JSON.stringify({ prompt }),
     });
