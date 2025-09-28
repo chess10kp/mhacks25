@@ -8,6 +8,7 @@
     "build": "tsc",
     "kalshi": "npx ts-node kalshi-trending.ts",
     "kalshi-test": "npx ts-node kalshi-test.ts",
+    "kalshi-buy": "npx ts-node kalshi-buy-order.ts",
     "ai-test": "npx ts-node fetch-ai-test.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
