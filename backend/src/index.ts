@@ -5,8 +5,10 @@ import bs58 from "bs58";
 import { balance, sendSolana, makeWalletKeys } from "./solanaWallet";
 dotenv.config();
 import { prompt as geminiPrompt } from "./gemini";
+import { OAuthClientRegistrationErrorSchema } from "@modelcontextprotocol/sdk/shared/auth";
 const app = express();
 const PORT = process.env.PORT || 3001;
+
 
 // Middleware
 // app.use(function (req, res, next) {
