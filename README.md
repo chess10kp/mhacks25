@@ -6,6 +6,8 @@ SolMate is a hackathon project that combines Solana blockchain with AI to create
 
 ## 🎥 Demo Video
 
+*Note: This is a bit scrappy - we filmed it 5 minutes before the deadline! 😬*
+
 Check out our demo: [SolMate Demo on Devpost](https://devpost.com/software/solmate-ew09jf)
 
 ## 🌟 Inspiration
