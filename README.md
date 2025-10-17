@@ -2,7 +2,7 @@
 
 **AI-Powered Solana Wallet & Kalshi Trading Assistant**
 
-SolMate is a hackathon project that combines Solana blockchain with AI to help users trade on Kalshi prediction markets. Built for MHacks 2025, it uses Gemini AI to analyze Kalshi markets and helps users make informed trading decisions with automated wallet management.
+SolMate is a hackathon project built for MHacks 2025 that combines Solana wallets with AI to help users trade on Kalshi prediction markets. It uses Gemini AI with MCP (Model Context Protocol) to analyze market data and provides automated wallet management for seamless trading.
 
 ## 🎥 Demo Video
 
@@ -20,6 +20,7 @@ SolMate connects to Solana wallets and helps users trade on Kalshi prediction ma
 
 - **Wallet Management**: Generate and manage Solana wallets with secure key generation
 - **AI Market Analysis**: Use Gemini AI to analyze Kalshi markets and provide trading insights
+- **Smart Market Selection**: Algorithm identifies the most liquid and interesting markets based on volume, open interest, and price proximity to 50%
 - **Real-Time Research**: Perplexity API provides up-to-date market information for AI analysis
 - **SOL Transactions**: Send SOL between wallets with balance checking
 - **Kalshi Integration**: Connect to live Kalshi markets, get data, and execute trades via API
@@ -100,7 +101,7 @@ SolMate connects to Solana wallets and helps users trade on Kalshi prediction ma
 - **Automated Generation**: Create new Solana wallets with secure key generation
 - **Multi-Wallet Support**: Manage multiple wallets with easy switching
 - **Balance Monitoring**: Real-time balance updates and transaction history
-- **Secure Storage**: Private keys stored securely with MPC protection
+- **Secure Storage**: Private keys stored securely with standard encryption
 
 ### 2. AI-Powered Market Analysis
 - **Smart Insights**: Gemini AI analyzes market trends and provides recommendations
@@ -184,7 +185,7 @@ REACT_APP_API_URL=http://localhost:3001
 ## 🎯 Challenges We Overcame
 
 ### Technical Challenges
-- **Security vs. Usability**: Balancing MPC security with seamless user experience
+- **Security vs. Usability**: Balancing wallet security with seamless user experience
 - **API Integration**: Smoothly connecting multiple APIs (Solana, Kalshi, Gemini)
 - **Real-Time Data**: Managing live market data with AI processing
 - **Cross-Origin Requests**: Handling CORS for frontend-backend communication
@@ -201,6 +202,7 @@ We're proud of what we built in this hackathon:
 
 - **Working Integration**: Successfully connected Solana, Gemini AI, Perplexity, and Kalshi APIs
 - **AI Chat Interface**: Built a functional chat interface with Gemini AI
+- **Smart Market Algorithm**: Developed algorithm to identify the most liquid and interesting markets
 - **Real-Time Research**: Integrated Perplexity API for up-to-date market research
 - **Wallet Management**: Created a working wallet generation and management system
 - **Market Analysis**: Combined live Kalshi market data with AI analysis and real-time research for trading decisions
@@ -232,7 +234,7 @@ We're proud of what we built in this hackathon:
 - **Model Context Protocol**: MCP for AI tool integration
 - **Frontend**: React 19 with TypeScript and Tailwind CSS
 - **Backend**: Node.js with Express.js
-- **Security**: Multi-Party Computation for wallet security
+- **Security**: Standard encryption for wallet security
 - **Real-Time Data**: Live market feeds and AI processing
 
 ## 🙏 Acknowledgments
