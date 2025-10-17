@@ -1,8 +1,8 @@
 # SolMate
 
-**AI-Powered Solana Wallet & Prediction Market Platform**
+**AI-Powered Solana Wallet & Kalshi Trading Assistant**
 
-SolMate is a hackathon project that combines Solana blockchain with AI to create an accessible prediction market platform. Built for MHacks 2025, it uses Gemini AI to analyze Kalshi markets and helps users make informed trading decisions with automated wallet management.
+SolMate is a hackathon project that combines Solana blockchain with AI to help users trade on Kalshi prediction markets. Built for MHacks 2025, it uses Gemini AI to analyze Kalshi markets and helps users make informed trading decisions with automated wallet management.
 
 ## 🎥 Demo Video
 
@@ -12,18 +12,18 @@ Check out our demo: [SolMate Demo on Devpost](https://devpost.com/software/solma
 
 ## 🌟 Inspiration
 
-We wanted to make Solana more accessible by combining AI with prediction markets. The idea was to use Gemini AI to analyze Kalshi markets and help users make better trading decisions while simplifying wallet management.
+We wanted to make Solana more accessible by combining AI with Kalshi trading. The idea was to use Gemini AI to analyze Kalshi markets and help users make better trading decisions while simplifying wallet management.
 
 ## 🚀 What It Does
 
-SolMate connects to Solana wallets and researches/executes prediction market trades:
+SolMate connects to Solana wallets and helps users trade on Kalshi prediction markets:
 
 - **Wallet Management**: Generate and manage Solana wallets with secure key generation
-- **AI Market Analysis**: Use Gemini AI to analyze Kalshi prediction markets and provide insights
+- **AI Market Analysis**: Use Gemini AI to analyze Kalshi markets and provide trading insights
 - **Real-Time Research**: Perplexity API provides up-to-date market information for AI analysis
 - **SOL Transactions**: Send SOL between wallets with balance checking
-- **Market Data**: Connect to live Kalshi markets and get AI recommendations
-- **Chat Interface**: Talk to SolMate AI for market insights and trading help
+- **Kalshi Integration**: Connect to live Kalshi markets, get data, and execute trades via API
+- **Chat Interface**: Talk to SolMate AI for market insights and trading recommendations
 
 ## 🏗️ Architecture
 
@@ -32,7 +32,7 @@ SolMate connects to Solana wallets and researches/executes prediction market tra
 - **Solana Integration**: Direct blockchain interaction using `@solana/web3.js`
 - **Gemini AI Integration**: AI-powered market analysis and recommendations
 - **Perplexity API Integration**: Real-time market research and data gathering
-- **Kalshi API Integration**: Real-time prediction market data
+- **Kalshi API Integration**: Real-time prediction market data and trade execution
 - **Wallet Management**: Secure key generation and transaction handling
 
 **Key Features:**
@@ -203,7 +203,7 @@ We're proud of what we built in this hackathon:
 - **AI Chat Interface**: Built a functional chat interface with Gemini AI
 - **Real-Time Research**: Integrated Perplexity API for up-to-date market research
 - **Wallet Management**: Created a working wallet generation and management system
-- **Market Analysis**: Combined live Kalshi market data with AI analysis and real-time research
+- **Market Analysis**: Combined live Kalshi market data with AI analysis and real-time research for trading decisions
 - **Clean UI**: Made a nice-looking interface with React and Tailwind
 
 ## 📚 What We Learned
@@ -228,7 +228,7 @@ We're proud of what we built in this hackathon:
 - **AI Research**: Perplexity API for real-time market research
 - **AI Analysis**: Google Gemini for intelligent market analysis
 - **Blockchain**: Solana for fast, low-cost transactions
-- **Prediction Markets**: Kalshi API for market data and trading
+- **Prediction Markets**: Kalshi API for market data and trade execution
 - **Model Context Protocol**: MCP for AI tool integration
 - **Frontend**: React 19 with TypeScript and Tailwind CSS
 - **Backend**: Node.js with Express.js
